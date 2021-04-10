@@ -20,5 +20,7 @@ select 50/0.5;
 --Como en este caso debemos tener mas de 20 cilindros por tienda
 --lo mejor es optimizar el volumen de los cilindros.
 
+!https://github.com/jchicatti/bd-4to/blob/main/plano1.png
+
 
 

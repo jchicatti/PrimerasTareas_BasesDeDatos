@@ -2,10 +2,10 @@
 
 -- Hay dos interpretaciones para lo que plantea el problema como una delta mensual.
 --A) El cambio en las cantidades que lleva pagando el cliente en todo lo que lleva de ser nuestro cliente y desglosar ese desarrollo por mes.
---B) Cuanto cambia lo que paga nuestro cliente en un mismo mes y sólo en ese mes. Y desglosar eso para cada mes.
+--B) Cuanto cambia lo que paga nuestro cliente en un mismo mes y sÃ³lo en ese mes. Y desglosar eso para cada mes.
 
 												--A
--- Si optamos por la solución A que es la que me pareció más lógica y a la que se refiere el problema:
+-- Si optamos por la soluciÃ³n A que es la que me pareciÃ³ mÃ¡s lÃ³gica y a la que se refiere el problema:
 with deltas_monto as (
 	select o.order_id,
 	o.customer_id as cliente,
@@ -41,7 +41,7 @@ create view meta_deltas as (
 	avg(delta) as prom_deltas
 	from deltas_monto group by anio, cliente, mes order by cliente, anio, mes
 );
---Obtenemos así a los clientes que tenemos que cuidar más:
+--Obtenemos asÃ­ a los clientes que tenemos que cuidar mÃ¡s:
 select cliente, avg(prom_deltas) as total_delta from meta_deltas
 group by cliente having avg(prom_deltas)>0 order by avg(prom_deltas) desc;
 
@@ -50,8 +50,8 @@ group by cliente having avg(prom_deltas)>0 order by avg(prom_deltas) desc;
 
 						--B
 --Si hacemos borron y cuenta nueva de la delta del cliente en cada mes la tabla se ve diferente
---La mayoría no hace mas de una compra por mes y esto hace que las deltas se vuelvan grandes pues solo se cuenta esa única compra.
---En este caso pues no nos dice muchísimo.
+--La mayorÃ­a no hace mas de una compra por mes y esto hace que las deltas se vuelvan grandes pues solo se cuenta esa Ãºnica compra.
+--En este caso pues no nos dice muchÃ­simo.
 with deltas_monto as (
 	select o.order_id,
 	o.customer_id as cliente,
@@ -88,6 +88,6 @@ create view meta_deltas2 as (
 	from deltas_monto group by anio, cliente, mes order by cliente, anio, mes
 );
 
---Aquí sacar un average no nos da un buen panorama de como están nuestros clientes.
+--AquÃ­ sacar un average no nos da un buen panorama de como estÃ¡n nuestros clientes.
 select cliente, avg(prom_deltas) as total_deltas from meta_deltas2
 group by cliente order by avg(prom_deltas) desc;
